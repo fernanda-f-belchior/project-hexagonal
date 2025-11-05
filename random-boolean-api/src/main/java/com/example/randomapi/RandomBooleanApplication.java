@@ -1,4 +1,4 @@
-package com.example;
+package com.example.randomapi;
 
 import com.example.randomapi.application.service.RandomBooleanService;
 import com.example.randomapi.port.RandomBooleanPort;
@@ -7,10 +7,10 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 
 @SpringBootApplication
-public class RandomBooleanApi {
+public class RandomBooleanApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(RandomBooleanApi.class, args);
+        SpringApplication.run(RandomBooleanApplication.class, args);
     }
 
     @Bean

@@ -1,7 +1,6 @@
-package com.exemple.projectapi.adapter.in.handler;
+package com.example.userapi.adapter.in.handler;
 
-import com.exemple.projectapi.domain.exception.BusinessException;
-import org.springframework.http.HttpStatus;
+import com.example.userapi.domain.exception.BusinessException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
@@ -16,7 +15,8 @@ public class BusinessExceptionHandler {
     public ResponseEntity<Map<String, Object>> handleBusinessException(BusinessException ex) {
         Map<String, Object> body = new HashMap<>();
         body.put("Mensagem:", ex.getMessage());
-        body.put("Status:", 422);
-        return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).body(body);
+        body.put("Status:", ex.getStatus().value());
+        return ResponseEntity.status(ex.getStatus().value()).body(body);
+
     }
 }

@@ -1,8 +1,5 @@
-package com.exemple.projectapi.adapter.out.repository;
+package com.example.userapi.domain.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -12,10 +9,7 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@Entity
-public class UserEntity {
-    @Id
-    @GeneratedValue
+public class User {
     private Long id;
     private String name;
     private String email;

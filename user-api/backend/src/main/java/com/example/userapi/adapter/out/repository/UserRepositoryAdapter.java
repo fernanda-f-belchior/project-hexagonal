@@ -1,12 +1,14 @@
-package com.exemple.projectapi.adapter.out.repository;
+package com.example.userapi.adapter.out.repository;
 
-import com.exemple.projectapi.domain.model.User;
-import com.exemple.projectapi.port.UserRepositoryPort;
+import com.example.userapi.domain.model.User;
+import com.example.userapi.port.UserRepositoryPort;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
 import java.util.Optional;
 
+@Slf4j
 @Component
 public class UserRepositoryAdapter implements UserRepositoryPort {
     private final UserJpaRepository jpa;
@@ -16,6 +18,7 @@ public class UserRepositoryAdapter implements UserRepositoryPort {
     }
 
     public User save(User user) {
+
         UserEntity entity = new UserEntity();
         entity.setId(user.getId());
         entity.setEmail(user.getEmail());
@@ -29,7 +32,12 @@ public class UserRepositoryAdapter implements UserRepositoryPort {
     }
 
     public List<User> findAll() {
-        return jpa.findAll().stream().map(this::toDomain).toList();
+
+        log.debug("Consultando todos os usuários no banco de dados...");
+        List<User> users = jpa.findAll().stream().map(this::toDomain).toList();
+        log.info("Consulta ao banco retornou {} registros", users.size());
+
+        return users;
     }
 
     public void deleteById(Long id) {
@@ -37,7 +45,6 @@ public class UserRepositoryAdapter implements UserRepositoryPort {
     }
 
     public User update(Long id, User user){
-
 
         user.setId(id);
         return this.save(user);

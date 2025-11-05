@@ -1,13 +1,13 @@
-package com.exemple.projectapi;
+package com.example.userapi;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 
 @SpringBootApplication
-public class ProjectApplication {
+public class UserApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(ProjectApplication.class, args);
+        SpringApplication.run(UserApplication.class, args);
     }
 }
