@@ -73,13 +73,22 @@
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
-            <optional>true</optional>
+            <version>1.18.30</version> <!-- versão compatível com Java 17 -->
+            <scope>provided</scope>
         </dependency>
+
+<!--        <optional>true</optional>-->
+<!--        </dependency>-->
 
         <dependency>
             <groupId>org.apache.logging.log4j</groupId>
             <artifactId>log4j-slf4j-impl</artifactId>
             <version>2.20.0</version>
+        </dependency>
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <scope>test</scope>
         </dependency>
 
     </dependencies>
@@ -91,6 +100,15 @@
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <version>3.1.0</version> <!-- ou a versão que você estiver usando -->
             </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <showWarnings>true</showWarnings>
+                    <verbose>true</verbose>
+                </configuration>
+            </plugin>
+
         </plugins>
     </build>
 

@@ -22,4 +22,8 @@ server:
   port: 8084
 
 external-api:
-  registration-url: http://localhost:8080/api/random/boolean
+  registration-url: ${EXTERNAL_API_REGISTRATION_URL}
+
+
+#external-api:
+#  registration-url: http://localhost:8080/api/random/boolean

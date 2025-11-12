@@ -4,7 +4,6 @@ import com.example.userapi.domain.model.User;
 import com.example.userapi.port.UserRepositoryPort;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
-
 import java.util.List;
 import java.util.Optional;
 
@@ -18,7 +17,7 @@ public class UserRepositoryAdapter implements UserRepositoryPort {
     }
 
     public User save(User user) {
-
+        log.debug("Persistindo usuário: {}", user);
         UserEntity entity = new UserEntity();
         entity.setId(user.getId());
         entity.setEmail(user.getEmail());
@@ -28,6 +27,7 @@ public class UserRepositoryAdapter implements UserRepositoryPort {
     }
 
     public Optional<User> findById(Long id) {
+        log.debug("Buscando usuário com ID: {}", id);
         return jpa.findById(id).map(this::toDomain);
     }
 
@@ -35,17 +35,16 @@ public class UserRepositoryAdapter implements UserRepositoryPort {
 
         log.debug("Consultando todos os usuários no banco de dados...");
         List<User> users = jpa.findAll().stream().map(this::toDomain).toList();
-        log.info("Consulta ao banco retornou {} registros", users.size());
-
         return users;
     }
 
     public void deleteById(Long id) {
+        log.debug("Excluindo usuário com ID: {}", id);
         jpa.deleteById(id);
     }
 
     public User update(Long id, User user){
-
+        log.debug("Atualizando usuário com ID: {} no banco de dados.", id);
         user.setId(id);
         return this.save(user);
     }
