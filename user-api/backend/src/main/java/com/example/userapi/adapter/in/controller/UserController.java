@@ -1,12 +1,13 @@
 package com.example.userapi.adapter.in.controller;
 
 
+import com.example.userapi.application.dto.UserDTO;
 import com.example.userapi.application.usecases.UserUseCase;
-import com.example.userapi.domain.model.User;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -32,9 +33,9 @@ public class UserController {
             @ApiResponse(responseCode = "422", description = "Usuário não disponível no rollout"),
             @ApiResponse(responseCode = "422", description = "Nome e email são obrigatórios")
     })
-    public ResponseEntity<User> create(@RequestBody User user) {
+    public ResponseEntity<UserDTO> create(@Valid @RequestBody UserDTO userDTO) {
         log.info("Recebida requisição POST /users");
-        return ResponseEntity.ok(userUseCase.save(user));
+        return ResponseEntity.ok(userUseCase.save(userDTO));
     }
 
     @GetMapping
@@ -42,7 +43,7 @@ public class UserController {
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Lista retornada"),
     })
-    public List<User> list() {
+    public List<UserDTO> list() {
         log.info("Recebida requisição GET /users");
         return userUseCase.findAll();
     }
@@ -53,20 +54,20 @@ public class UserController {
             @ApiResponse(responseCode = "200", description = "Usuário encontrado"),
             @ApiResponse(responseCode = "404", description = "Usuário não encontrado")
     })
-    public ResponseEntity<User> findById(@PathVariable Long id) {
+    public ResponseEntity<UserDTO> findById(@PathVariable Long id) {
         log.info("Recebida requisição GET /user/{id}");
         return ResponseEntity.ok(userUseCase.findById(id));
     }
 
-    @PutMapping("/{id}")
+    @PutMapping()
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Usuário atualizado"),
             @ApiResponse(responseCode = "404", description = "Usuário não encontrado")
     })
-    @Operation(summary = "Endpoint responsável por atualizar os dados de um usuário identificado pelo id.", description = "Retorna os dados atualizados do usuário.")
-    public ResponseEntity<?> update(@PathVariable Long id, @RequestBody User user) {
-        log.info("Recebida requisição PUT /users/{id}");
-        return ResponseEntity.ok(userUseCase.update(id, user));
+    @Operation(summary = "Endpoint responsável por atualizar os dados de um usuário.", description = "Retorna os dados atualizados do usuário.")
+    public ResponseEntity<?> update(@RequestBody UserDTO userDTO) {
+        log.info("Recebida requisição PUT /users");
+        return ResponseEntity.ok(userUseCase.update(userDTO));
     }
 
     @DeleteMapping("/{id}")

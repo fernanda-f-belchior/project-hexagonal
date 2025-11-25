@@ -1,16 +1,14 @@
 package com.example.userapi.application.usecases;
 
-import com.example.userapi.domain.model.User;
-
+import com.example.userapi.application.dto.UserDTO;
 import java.util.List;
-import java.util.Optional;
 
 public interface UserUseCase {
 
-    public User save(User user);
-    public User update(Long id, User user);
+    public UserDTO save(UserDTO userDTO);
+    public UserDTO update(UserDTO userDTO);
     public void deleteById(Long id);
-    public User findById(Long id);
-    public List<User> findAll();
+    public UserDTO findById(Long id);
+    public List<UserDTO> findAll();
 
 }

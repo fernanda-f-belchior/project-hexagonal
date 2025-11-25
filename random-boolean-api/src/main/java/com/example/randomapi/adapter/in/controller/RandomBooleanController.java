@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/api/random")
+@RequestMapping()
 public class RandomBooleanController {
 
     private final RandomBooleanPort randomBooleanPort;
@@ -15,7 +15,7 @@ public class RandomBooleanController {
         this.randomBooleanPort = randomBooleanPort;
     }
 
-    @GetMapping("/boolean")
+    @GetMapping()
     public boolean getRandomBoolean() {
         return randomBooleanPort.getRandomBoolean();
     }

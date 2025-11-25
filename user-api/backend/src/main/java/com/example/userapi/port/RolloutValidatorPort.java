@@ -1,5 +1,5 @@
 package com.example.userapi.port;
 
-public interface ValidatorPort {
+public interface RolloutValidatorPort {
     public boolean isRegistrationAllowed();
 }

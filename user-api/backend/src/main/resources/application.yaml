@@ -1,6 +1,8 @@
 spring:
   application:
     name: project
+  profiles:
+    active: dev
 
   datasource:
     url: jdbc:h2:mem:testdb
@@ -21,9 +23,14 @@ spring:
 server:
   port: 8084
 
+
 external-api:
-  registration-url: ${EXTERNAL_API_REGISTRATION_URL}
+  random-boolean-url: ${EXTERNAL_API_RANDOM_BOOLEAN_URL}
+  postal-code-validation-url: ${EXTERNAL_API_POSTAL_CODE_VALIDATION_URL}
 
 
 #external-api:
-#  registration-url: http://localhost:8080/api/random/boolean
+#  random-boolean-url: http://localhost:8080/
+#  postal-code-validation-url: https://opencep.com/v1/
+
+

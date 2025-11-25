@@ -1,5 +1,6 @@
 package com.example.userapi.adapter.out.repository;
 
+import com.example.userapi.application.mapper.UserMapper;
 import com.example.userapi.domain.model.User;
 import com.example.userapi.port.UserRepositoryPort;
 import lombok.extern.slf4j.Slf4j;
@@ -12,30 +13,33 @@ import java.util.Optional;
 public class UserRepositoryAdapter implements UserRepositoryPort {
     private final UserJpaRepository jpa;
 
+
+    private final UserMapper userMapper = new UserMapper();
+
     public UserRepositoryAdapter(UserJpaRepository jpa) {
         this.jpa = jpa;
     }
 
     public User save(User user) {
         log.debug("Persistindo usuário: {}", user);
-        UserEntity entity = new UserEntity();
-        entity.setId(user.getId());
-        entity.setEmail(user.getEmail());
-        entity.setName(user.getName());
-
-        return toDomain(jpa.save(entity));
+        UserEntity entity = userMapper.convertToUserEntity(user);
+        return userMapper.convertToUser(jpa.save(entity));
     }
 
     public Optional<User> findById(Long id) {
         log.debug("Buscando usuário com ID: {}", id);
-        return jpa.findById(id).map(this::toDomain);
+        Optional<UserEntity> userEntity = jpa.findById(id);
+        UserEntity user = userEntity.orElse(new UserEntity());
+
+        return Optional.of(userMapper.convertToUser(user));
     }
 
     public List<User> findAll() {
-
         log.debug("Consultando todos os usuários no banco de dados...");
-        List<User> users = jpa.findAll().stream().map(this::toDomain).toList();
-        return users;
+        return jpa.findAll().stream()
+                .map(userMapper::convertToUser)
+                .toList();
+
     }
 
     public void deleteById(Long id) {
@@ -43,14 +47,6 @@ public class UserRepositoryAdapter implements UserRepositoryPort {
         jpa.deleteById(id);
     }
 
-    public User update(Long id, User user){
-        log.debug("Atualizando usuário com ID: {} no banco de dados.", id);
-        user.setId(id);
-        return this.save(user);
-    }
 
-    private User toDomain(UserEntity entity) {
-        return new User(entity.getId(), entity.getName(), entity.getEmail());
-    }
 
 }
